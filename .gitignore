@@ -25,3 +25,7 @@ yarn-error.log*
 # api and keys
 /dev
 /dev/apiKeys.js
+
+# formatting
+.eslintrc.json
+.prettierrc.json
