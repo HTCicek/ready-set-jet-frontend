@@ -2,13 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+import Welcome from './Welcome';
+
 const Splash = props => {
-  const { id } = props.user;
+  // const { id } = props.user;
 
   return (
-    <div>
-      {id ? <h2>render continue page</h2> : <h2>render welcome page</h2>}
-    </div>
+    <>
+      {false ? <h2>render continue page</h2> : <Welcome />}
+    </>
   );
 };
 

@@ -1,21 +1,30 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import { CssBaseLine, Container } from '@material-ui/core';
+import { CssBaseline, Container, Toolbar, Grid } from '@material-ui/core';
 import './App.css';
 
-import NavComp from './components/NavComp';
-import Main from './components/Main';
+import AppNavBar from './components/NavComp';
+import MainBody from './components/Main';
 import BottomComp from './components/BottomComp';
 
 function App() {
   return (
     <>
-      <CssBaseLine />
+      <CssBaseline />
       <Container maxWidth="sm">
-        <NavComp />
-        <Main />
-        <BottomComp />
+        <Grid
+          container
+          direction="column"
+          justify="space-between"
+          alignItems="stretch"
+        >
+          <AppNavBar />
+          <Toolbar />
+          <MainBody />
+          <Toolbar />
+          <BottomComp />
+        </Grid>
       </Container>
     </>
   );
