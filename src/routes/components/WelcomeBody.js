@@ -2,18 +2,21 @@ import React from 'react';
 import { Typography, Grid, Avatar, Paper } from '@material-ui/core';
 import NightsStayIcon from '@material-ui/icons/NightsStay';
 
-const Welcome = () => {
+const WelcomeBody = () => {
   return (
     <>
-      <Avatar variant="square" alt="welcome image" sizes="large" >
-        <NightsStayIcon fontSize="large" />
-      </Avatar>
-      <Typography variant="h6">
-        Ready Set Jet
-      </Typography>
-      <Typography variant="subheading1" >
-        Jet-Lag Defeater
-      </Typography>
+      <Grid
+        container
+        direction="column"
+        justify="space-evenly"
+        alignItems="center"
+      >
+        <Avatar variant="square" alt="welcome image" sizes="large">
+          <NightsStayIcon fontSize="large" />
+        </Avatar>
+        <Typography variant="h6">Ready Set Jet</Typography>
+        <Typography variant="subtitle1">Jet-Lag Defeater</Typography>
+      </Grid>
       <Paper>
         <Grid
           container
@@ -35,4 +38,4 @@ const Welcome = () => {
   );
 };
 
-export default Welcome;
+export default WelcomeBody;

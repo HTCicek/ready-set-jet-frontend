@@ -1,4 +1,5 @@
 const defaultState = {
+  username: '',
   email: '',
   password: '',
   password_confirmation: '',
@@ -6,7 +7,9 @@ const defaultState = {
 
 function reducer(prevState = defaultState, action) {
   switch (action.type) {
-    case 'CHANGE_EMAIL':
+    case 'CHANGE_UN':
+      return { ...prevState, username: action.payload };
+    case 'CHANGE_EM':
       return { ...prevState, email: action.payload };
     case 'CHANGE_PW':
       return { ...prevState, password: action.payload };

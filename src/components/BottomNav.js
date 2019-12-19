@@ -4,8 +4,8 @@ import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
-const BottomComp = props => {
-  const { location, history } = props;
+const BottomNav = props => {
+  const { compToDisp, history, location } = props;
 
   const whichButtonsDoWeDisplay = () => {
     switch (location.pathname) {
@@ -26,10 +26,10 @@ const BottomComp = props => {
   };
 
   return (
-    <footer>
-      <BottomNavigation style={{ 'background-color': 'inherit' }}>{whichButtonsDoWeDisplay()}</BottomNavigation>
-    </footer>
+    <>
+      <BottomNavigation style={{ backgroundColor: 'inherit' }}>{whichButtonsDoWeDisplay()}</BottomNavigation>
+    </>
   );
 };
 
-export default withRouter(BottomComp);
+export default withRouter(BottomNav);

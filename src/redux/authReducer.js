@@ -1,11 +1,12 @@
 const defaultState = {
-  authToken: null,
+  token: localStorage.token,
+  loggedIn: localStorage.loggedIn,
 };
 
 function reducer(prevState = defaultState, action) {
   switch (action.type) {
-    case 'CHANGE_EMAIL':
-      return { ...prevState, auth: action.payload };
+    case 'GET_TOKEN':
+      return { ...prevState, auth: action.payload, loggedIn: true };
     default:
       return prevState;
   }

@@ -1,30 +1,35 @@
-const API = 'http://localhost:3000';
+const API = 'http://localhost:3001';
 
-const newUser = userData => {
-  fetch(`${API}/users`, {
+const allLocations = () => {
+  return fetch(`${API}/locations`)
+    .then(res => res.json());
+};
+
+const newUser = user => {
+  return fetch(`${API}/users`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ userData }),
+    body: JSON.stringify({ user }),
   });
 };
 
 const newFlight = flightData => {
-  fetch(`${API}/flights`, {
+  return fetch(`${API}/flights`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      Authorization: localStorage.userAuth,
+      Authorization: localStorage.token,
     },
     body: JSON.stringify({ flightData }),
   });
 };
 
 const logIn = userData => {
-  fetch(`${API}/login`, {
+  return fetch(`${API}/login`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -41,9 +46,9 @@ const getCurrentUser = () => {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      Authorization: localStorage.userAuth,
+      Authorization: localStorage.token,
     },
   });
 };
 
-export { newUser, newFlight, logIn, getCurrentUser };
+export { allLocations, newUser, newFlight, logIn, getCurrentUser };

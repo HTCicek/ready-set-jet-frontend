@@ -1,13 +1,11 @@
 const defaultState = {
-  id: null,
-  bedTime: null,
-  wakeUpTime: null,
+  user: {},
 };
 
 function reducer(prevState = defaultState, action) {
   switch (action.type) {
-    case 'auth':
-      return prevState;
+    case 'SET_USER':
+      return { ...prevState, user: action.payload };
     default:
       return prevState;
   }

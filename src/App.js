@@ -1,36 +1,86 @@
+/* eslint-disable react/jsx-curly-brace-presence */
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { CssBaseline, Container, Grid } from '@material-ui/core';
+import { allLocations } from './adapters/backend';
+import { setLocations } from './redux/actions';
 
-import { CssBaseline, Container, Toolbar, Grid } from '@material-ui/core';
+
+import Home from './routes/Home';
+import SignIn from './routes/SignIn';
+import SignUp from './routes/SignUp';
+import Welcome from './routes/Welcome';
+
 import './App.css';
 
-import AppNavBar from './components/NavComp';
-import MainBody from './components/Main';
-import BottomComp from './components/BottomComp';
+class App extends React.Component {
+  componentDidMount() {
+    const { setLocations } = this.props;
 
-function App() {
-  return (
-    <>
-      <CssBaseline />
-      <Container maxWidth="sm">
-        <Grid
-          container
-          direction="column"
-          justify="space-between"
-          alignItems="stretch"
-        >
-          <AppNavBar />
-          <Toolbar />
-          <MainBody />
-          <Toolbar />
-          <BottomComp />
-        </Grid>
-      </Container>
-    </>
-  );
+    allLocations().then(data => {
+      // send data to store
+      setLocations(data.airports);
+    });
+  }
+
+  rootRouter = () => {
+    const { loggedIn } = this.props;
+    if (!!localStorage.token && loggedIn) {
+      return <Redirect to="/home" />;
+    } else if (!!localStorage.token) {
+      return <Redirect to="/sign-in" />;
+    } else if (!localStorage.token && !!localStorage.welcomeSeen) {
+      return <Redirect to="/sign-up" />;
+    } else {
+      return <Redirect to="/welcome" />;
+    }
+  }
+
+  render() {
+    const { rootRouter } = this;
+    return (
+      <>
+        <CssBaseline />
+        <Container maxWidth="sm" component="main">
+          <Grid
+            container
+            direction="column"
+            justify="space-around"
+            alignItems="stretch"
+          >
+            <Switch>
+              <Route path="/sign-up">
+                {/* <h1>Sign Up</h1> */}
+                {localStorage.token ? <Redirect to="/sign-in" /> : <SignUp />}
+              </Route>
+              <Route path="/sign-in">
+                <h1>Sign In</h1>
+                <SignIn />
+              </Route>
+              <Route path="/home">
+                <h1>Home</h1>
+                <Home />
+              </Route>
+              <Route path="/welcome">
+                <Welcome />
+              </Route>
+              <Route path="/">{rootRouter()}</Route>
+            </Switch>
+          </Grid>
+        </Container>
+      </>
+    );
+  }
 }
 
-export default withRouter(App);
+const msp = state => {
+  return {
+    loggedIn: state.auth.loggedIn,
+  };
+};
+
+export default connect(msp, { setLocations })(App);
 
 /*
   return (
