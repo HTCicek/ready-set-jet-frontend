@@ -1,11 +1,17 @@
 const defaultState = {
-  user: {},
+  id: null,
+  username: '',
+  email: '',
+  flights: [],
 };
 
 function reducer(prevState = defaultState, action) {
   switch (action.type) {
     case 'SET_USER':
-      return { ...prevState, user: action.payload };
+      return {
+        ...prevState,
+        ...action.payload,
+      };
     default:
       return prevState;
   }

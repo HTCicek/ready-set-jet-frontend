@@ -14,7 +14,7 @@ import {
 import { newUser } from '../../adapters/backend';
 
 const SignUpBody = props => {
-  const { changeEmail, changePass, changePassConf, changeUsername, setUser } = props;
+  const { changeEmail, changePass, changePassConf, changeUsername } = props;
 
   const submitHandler = e => {
     e.preventDefault();
@@ -22,12 +22,12 @@ const SignUpBody = props => {
     newUser(props.userForm)
       .then(res => res.json())
       .then(data => {
-        const user = { ...data.user };
+        const user = data.user.user;
         authToken(data.token);
         localStorage.setItem('token', data.token);
         localStorage.setItem('loggedIn', true);
 
-        setUser(user);
+        props.setUser(user);
         return data;
       })
       .then(data => {

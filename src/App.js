@@ -51,8 +51,7 @@ class App extends React.Component {
           >
             <Switch>
               <Route path="/sign-up">
-                {/* <h1>Sign Up</h1> */}
-                {localStorage.token ? <Redirect to="/sign-in" /> : <SignUp />}
+                {this.props.loggedIn ? <Redirect to="/sign-in" /> : <SignUp />}
               </Route>
               <Route path="/sign-in">
                 <h1>Sign In</h1>
