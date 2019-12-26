@@ -43,7 +43,7 @@ const SignUpBody = props => {
   return (
     <>
       <Typography component="h1" variant="h5">
-        Sign Up
+        Sign Up!
       </Typography>
       <form onSubmit={submitHandler}>
         <Grid container spacing={2}>
