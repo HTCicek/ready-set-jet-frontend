@@ -1,7 +1,38 @@
 import React from 'react';
 
-const SignIn = () => {
-  return <div></div>;
+import Nav from '../sections/Nav';
+import Main from '../sections/Main';
+import Footer from '../sections/Footer';
+
+import SignInForm from '../components/SignInForm';
+import SignInSignedIn from '../components/SignInSignedIn';
+
+const SignIn = props => {
+  const navProps = () => {
+    if (!localStorage.loggedIn)
+      return {
+        title: null,
+        button: true,
+        settings: false,
+      };
+    return {
+      title: 'Ready Set Jet',
+      button: true,
+      settings: false,
+    };
+  };
+
+  return (
+    <>
+      <Nav compToDisp={navProps()} />
+      {localStorage.loggedIn ? (
+        <Main compToDisp={<SignInSignedIn />} />
+      ) : (
+        <Main compToDisp={<SignInForm />} />
+      )}
+      <Footer />
+    </>
+  );
 };
 
 export default SignIn;

@@ -1,43 +1,79 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-import TopNav from '../components/TopNav';
-import MainBody from '../components/MainBody';
-import SignUpBody from './components/SignUpBody';
 
-const SignUp = props => {
-  const { history } = props;
+import Footer from '../sections/Footer';
+import Main from '../sections/Main';
+import Nav from '../sections/Nav';
 
-  return (
-    <>
-      <TopNav
-        compToDisp={{title: "Ready Set Jet", button: true, settings: false}}
-      />
-      <MainBody compToDisp={<SignUpBody />} />
-      <footer>{/* Bottomnav */}</footer>
-      {/*
-        Sign Up Page
+import SignUpForm from '../components/SignUpForm';
+import UserForm from '../components/UserForm';
+import SleepForm from '../components/SleepForm';
 
-        TopNav shows:
-          Back Button
-          'Ready Set Jet'
+class SignUp extends React.Component {
+
+  state = {
+    step: '',
+  }
+
+  setStepState = string => {
+    this.setState({
+      step: string,
+    })
+  }
+  
+  formRender = userFormStep => {
+    switch (userFormStep) {
+      case 'username':
+        return(
+          <Main
+            compToDisp={
+              <UserForm setStepState={this.setStepState}/>
+            }
+          />
+        )
+      case 'sleep':
+        return(
+          <Main
+            compToDisp={
+              <SleepForm setStepState={this.setStepState}/>
+            }
+          />
+        )      
+      default:
+        return(
+          <Main
+            compToDisp={
+              <SignUpForm setStepState={this.setStepState}/>
+            }
+          />
+        )    }
+  };
+
+  render(){
+    const { step } = this.state;
+    const { formRender } = this;
+    return (
+      <>
+        <Nav
+          compToDisp={{ title: 'Ready Set Jet', button: true, settings: false }}
+        />
+        {/* 
+
+        TODO
+        This could use a refactor, there should be a way to rerender without needing state when using redux.
         
-        MainBody shows:
-          'Sign Up'
-          description
-
-          form:
-            username
-            email
-            password
-            password_confirmation
-            button to Create Accound
-          T&C disclaimer
-
-        BottomNav shows Link 'I have an Account' links to '/sign-in'
-
-      */}
-    </>
-  );
+        */}
+        {formRender(step)}
+        <Footer />
+      </>
+    );
+  };
 };
 
-export default withRouter(SignUp);
+// const msp = state => {
+//   console.log('msp called state in SignUp',state)
+//   return {
+//     step: state.userForm.step,
+//   };
+// };
+
+export default SignUp;

@@ -1,27 +1,49 @@
 /* eslint-disable react/jsx-curly-brace-presence */
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { CssBaseline, Container, Grid } from '@material-ui/core';
-import { allLocations } from './adapters/backend';
-import { setLocations } from './redux/actions';
+import { allLocations, getCurrentUser } from './adapters/backend';
+import { setLocations, setUser, authToken } from './redux/actions';
 
+import { Grid } from 'semantic-ui-react';
 
 import Home from './routes/Home';
 import SignIn from './routes/SignIn';
 import SignUp from './routes/SignUp';
 import Welcome from './routes/Welcome';
+import AddFlight from './routes/AddFlight';
 
 import './App.css';
+import SleepForm from './components/SleepForm';
+import Main from './sections/Main';
+import UserForm from './components/UserForm'
+import FlightForm from './components/FlightForm'
 
 class App extends React.Component {
-  componentDidMount() {
-    const { setLocations } = this.props;
 
+  componentDidMount() {
+    const { setLocations, setUser, authToken } = this.props;
+
+    // TODO On mount, remove flights from user if it's 48 hours past that date
+    
     allLocations().then(data => {
       // send data to store
-      setLocations(data.airports);
+      if (data.airports) {
+        setLocations(data.airports);
+      } else {
+        console.error("failed to receive airports")
+      }
     });
+
+    if ( localStorage.loggedIn ) {
+      getCurrentUser()
+        .then(res => res.json())
+        .then(data => {
+          console.log(data)
+          setUser(data.user);
+          authToken(data.token)
+        })
+    }
   }
 
   rootRouter = () => {
@@ -39,47 +61,51 @@ class App extends React.Component {
 
   render() {
     const { rootRouter } = this;
+    const { location } = this.props;
     return (
-      <>
-        <CssBaseline />
-        <Container maxWidth="sm" component="main">
-          <Grid
-            container
-            direction="column"
-            justify="space-around"
-            alignItems="stretch"
-          >
-            <Switch>
-              <Route path="/sign-up">
-                {this.props.loggedIn ? <Redirect to="/sign-in" /> : <SignUp />}
-              </Route>
-              <Route path="/sign-in">
-                <h1>Sign In</h1>
-                <SignIn />
-              </Route>
-              <Route path="/home">
-                <h1>Home</h1>
-                <Home />
-              </Route>
-              <Route path="/welcome">
-                <Welcome />
-              </Route>
-              <Route path="/">{rootRouter()}</Route>
-            </Switch>
-          </Grid>
-        </Container>
-      </>
+      <Grid centered columns={1} verticalAlign="middle" container={ location.pathname === '/welcome'} >
+        <Switch>
+
+          {/* Start debug routes */}
+
+          <Route path="/debug/sleepForm">
+            <Main compToDisp={<SleepForm />} />
+          </Route>
+          <Route path="/debug/userForm">
+            <Main compToDisp={<UserForm />} />
+          </Route>
+          <Route path="/debug/flightForm">
+            <Main compToDisp={<FlightForm />} />
+          </Route>
+
+          {/* End debug routes */}
+
+          <Route path="/sign-up">
+            {localStorage.loggedIn ? <Redirect to="/sign-in" /> : <SignUp />}
+          </Route>
+          <Route path="/sign-in">
+            {/* <h1>Sign In</h1> */}
+            <SignIn />
+          </Route>
+          <Route path="/home">
+            {/* <h1>Home</h1> */}
+            <Home />
+          </Route>
+          <Route path="/add-flight">
+            <AddFlight />
+          </Route>
+          <Route path="/welcome">
+            <Welcome />
+          </Route>
+          <Route path="/">{rootRouter()}</Route>
+        </Switch>
+      </Grid>
     );
   }
 }
 
-const msp = state => {
-  return {
-    loggedIn: state.auth.loggedIn,
-  };
-};
 
-export default connect(msp, { setLocations })(App);
+export default withRouter(connect(null, { setLocations, setUser, authToken })(App));
 
 /*
   return (

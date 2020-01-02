@@ -1,7 +1,17 @@
+# Ready Set Jet
+
+## Run it
+
+Please review base readme for instructions for the docker set up
+
+## 
+
 ## About File Structure
 
-App is used to display routes from '/routes'
+The app is structured as such:
 
-route-specific components are stored in '/routes/components'
+App.js acts as a switch between pages depending on route
 
-the app is split into three main components from which routes are structured; these can be found in '/components'
+Each page under /src/routes renders the three 'section' components with page specific props, found in /src/sections and /src/components respectively.
+
+/src/adapters contains functions for interacting with the backend.

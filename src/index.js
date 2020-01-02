@@ -1,16 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import thunk from 'redux-thunk';
+// import 'semantic-ui-css/semantic.min.css';
+import 'semantic-ui-less/semantic.less';
 
 import './index.css';
 import App from './App';
 
 import userReducer from './redux/userReducer';
 import userFormReducer from './redux/userFormReducer';
-import sleepFormReducer from './redux/sleepFormReducer';
 import destinatonReducer from './redux/destinationReducer';
 import flightFormReducer from './redux/flightFormReducer';
 import authReducer from './redux/authReducer';
@@ -21,21 +22,11 @@ const rootReducer = combineReducers({
   user: userReducer,
   userForm: userFormReducer,
   flightForm: flightFormReducer,
-  destinatons: destinatonReducer,
-  sleepForm: sleepFormReducer,
+  destinations: destinatonReducer,
   auth: authReducer,
 });
 
-const store = createStore(
-  rootReducer,
-  compose(
-    applyMiddleware(thunk),
-    // eslint-disable-next-line no-underscore-dangle
-    window.__REDUX_DEVTOOLS_EXTENSION__ &&
-      // eslint-disable-next-line no-underscore-dangle
-      window.__REDUX_DEVTOOLS_EXTENSION__(),
-  ),
-);
+const store = createStore(rootReducer, applyMiddleware(thunk));
 ReactDOM.render(
   <Provider store={store}>
     <Router>
