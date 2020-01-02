@@ -67,7 +67,7 @@ const FlightBox = props => {
   };
 
   const renderFlights = flightObjs => {
-    const arrOfCards = flightObjs.sort((flightObjA, flightObjB) => flightObjA.departure_time - flightObjB.departureTime).map(flightObj => {
+    const arrOfCards = flightObjs.map(flightObj => {
       return flightCard(flightObj);
     });
     // call map over flights in here

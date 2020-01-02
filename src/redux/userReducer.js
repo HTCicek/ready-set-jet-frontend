@@ -15,6 +15,7 @@ function reducer(prevState = defaultState, action) {
         ...action.payload,
       };
     case 'ADD_FLIGHT':
+      // TODO, either prepend or append depending on payload's departure date
       return {
         ...prevState,
         flights: [...prevState.flights, action.payload],
