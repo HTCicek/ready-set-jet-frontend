@@ -2,6 +2,8 @@ const defaultState = {
   id: null,
   username: '',
   email: '',
+  bed_time: '',
+  wake_up_time: '',
   flights: [],
 };
 
@@ -12,6 +14,13 @@ function reducer(prevState = defaultState, action) {
         ...prevState,
         ...action.payload,
       };
+    case 'ADD_FLIGHT':
+      return {
+        ...prevState,
+        flights: [...prevState.flights, action.payload],
+      };
+    case 'LOG_OUT':
+      return { ...defaultState };
     default:
       return prevState;
   }

@@ -1,8 +1,7 @@
 const API = 'http://localhost:3001';
 
 const allLocations = () => {
-  return fetch(`${API}/locations`)
-    .then(res => res.json());
+  return fetch(`${API}/locations`).then(res => res.json());
 };
 
 const newUser = user => {
@@ -16,7 +15,7 @@ const newUser = user => {
   });
 };
 
-const newFlight = flightData => {
+const newFlight = flight => {
   return fetch(`${API}/flights`, {
     method: 'POST',
     headers: {
@@ -24,24 +23,24 @@ const newFlight = flightData => {
       'Content-Type': 'application/json',
       Authorization: localStorage.token,
     },
-    body: JSON.stringify({ flightData }),
+    body: JSON.stringify({ flight }),
   });
 };
 
-const logIn = userData => {
+const logIn = (email, password) => {
   return fetch(`${API}/login`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ userData }),
+    body: JSON.stringify({ email, password }),
   });
   // on response set data.token to localstorage, and user to the state
 };
 
 const getCurrentUser = () => {
-  fetch(`${API}/auto_login`, {
+  return fetch(`${API}/auto_login`, {
     method: 'GET',
     headers: {
       Accept: 'application/json',
@@ -51,4 +50,16 @@ const getCurrentUser = () => {
   });
 };
 
-export { allLocations, newUser, newFlight, logIn, getCurrentUser };
+const updateUser = user => {
+  return fetch(`${API}/users/update`, {
+    method: 'PATCH',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: localStorage.token,
+    },
+    body: JSON.stringify({ ...user }),
+  });
+};
+
+export { allLocations, newUser, newFlight, logIn, getCurrentUser, updateUser };

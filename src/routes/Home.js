@@ -1,7 +1,17 @@
 import React from 'react';
+import Nav from '../sections/Nav';
+import Main from '../sections/Main';
+import Footer from '../sections/Footer';
+import Dashboard from '../components/Dashboard';
 
 const Home = () => {
-  return <div></div>;
+  return(
+    <>
+      <Nav compToDisp={{ title: 'Dashboard', button: true, settings: true }} />
+      <Main compToDisp={<Dashboard />} />
+      <Footer />
+    </>
+  )
 };
 
 export default Home;
