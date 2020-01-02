@@ -9,7 +9,7 @@ import { DateTimeInput } from 'semantic-ui-calendar-react';
 import DestinationSearch from './DestinationSearch';
 
 import { newFlight } from '../adapters/backend';
-import { flightTime, parseFlightDuration } from '../adapters/timeyWimey';
+import { getFlightTime, parseFlightDuration } from '../adapters/timeyWimey';
 import { addFlight, setOrigin, setDest, setDepartTime } from '../redux/actions';
 
 const fuseOptions = {
@@ -48,7 +48,7 @@ const FlightForm = props => {
 
     // Add flight time to departure time, then take the difference
     const newFlightObj = parseFlightDuration(
-      flightTime(
+      getFlightTime(
         origin.latitude,
         origin.longitude,
         destination.latitude,
@@ -57,12 +57,12 @@ const FlightForm = props => {
       departureTime,
       true,
     );
-    const { arrivalTime, flightDuration } = newFlightObj;
+    const { arrivalTime, flightTime } = newFlightObj;
     const flight = {
       origin_id: origin.id,
       destination_id: destination.id,
       departure_time: departureTime,
-      flight_time: flightDuration,
+      flight_time: flightTime,
       arrival_time: arrivalTime,
     };
     newFlight(flight)

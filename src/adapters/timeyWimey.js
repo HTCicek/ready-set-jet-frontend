@@ -19,7 +19,7 @@ const deg2rad = deg => {
   return deg * (Math.PI / 180);
 };
 
-const flightTime = (lat1s, lon1s, lat2s, lon2s) => {
+const getFlightTime = (lat1s, lon1s, lat2s, lon2s) => {
   // 800 kph jet speed in meters per second
   const flightSpeed = 222.222;
 
@@ -57,11 +57,11 @@ const parseFlightDuration = (timeOfFlight, timeOfDeparture, obj=false ) => {
   const flightTimeObject = {
     departureTime: startTime,
     arrivalTime: endTime,
-    flightDuration: flightDuration,
+    flightTime: flightDuration,
   };
 
   if (obj) return flightTimeObject;
   return flightDuration;
 };
 
-export { parseFlightDuration, flightTime };
+export { parseFlightDuration, getFlightTime };

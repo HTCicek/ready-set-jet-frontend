@@ -20,9 +20,12 @@ import UserForm from './components/UserForm'
 import FlightForm from './components/FlightForm'
 
 class App extends React.Component {
+
   componentDidMount() {
     const { setLocations, setUser, authToken } = this.props;
 
+    // TODO On mount, remove flights from user if it's 48 hours past that date
+    
     allLocations().then(data => {
       // send data to store
       if (data.airports) {

@@ -21,7 +21,6 @@ class SignUp extends React.Component {
   }
   
   formRender = userFormStep => {
-    console.log("formRender switch veing called with: ", userFormStep)
     switch (userFormStep) {
       case 'username':
         return(
