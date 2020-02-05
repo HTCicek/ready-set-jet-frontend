@@ -75,7 +75,6 @@ const Dashboard = props => {
 };
 
 const msp = state => {
-  console.log(state.user);
   return {
     username: state.user.username,
     email: state.user.email,
