@@ -4,3 +4,7 @@ node_modules
 build
 npm-debug.log*
 npm-error.log*
+
+.dockerignore
+Dockerfile
+Dockerfile.prod
